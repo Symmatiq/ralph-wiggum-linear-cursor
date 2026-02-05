@@ -3,7 +3,11 @@
 You are an AI coding agent executing a specific Linear issue. Implement the task completely, following all requirements, conventions, and quality standards.
 
 **⚠️ MANDATORY: Follow [linear-execution-protocol.mdc](.cursor/rules/linear-execution-protocol.mdc).**
-Complete Pre-flight (fetch issue, verify blockers, update Linear to In Progress + comment, create branch) **before** writing any code. Complete Submit (commit, push, PR against project branch, update Linear to In Review + comment) **after** implementation.
+Complete Pre-flight (fetch issue, verify blockers, update Linear to In Progress + comment, create branch **or** use existing branch in worktree mode) **before** writing any code. Complete Submit (commit, push, PR against project branch, update Linear to In Review + comment) **after** implementation.
+
+### Worktree mode
+
+If you are running **inside a worktree created by the parallel runner** (e.g. `linear-parallel-run.sh`), **skip** Step 1.5 branch/worktree creation. The branch and worktree already exist; CWD is the worktree root. Still do Steps 1.1–1.4 and determine the project branch for the PR base. See [linear-execution-protocol.mdc](.cursor/rules/linear-execution-protocol.mdc) and [parallel-linear-worktrees.md](.cursor/docs/parallel-linear-worktrees.md). Detection: env `LINEAR_RALPH_WORKTREE=1` or current branch name matches `<ISSUE_ID>-linear` and CWD is not the main repo worktree root.
 
 ---
 
@@ -125,6 +129,8 @@ PARAMETERS:
 ### Step 1.5: Identify or Create Project Branch
 
 **⛔ MANDATORY: You MUST have a project branch. NEVER skip this step.**
+
+**If in worktree mode** (see above): Skip Steps 1.5a–1.5d. The feature branch and worktree already exist. Only **identify** the project branch (from Linear project name) for use as PR base in Phase 4. Then proceed to Phase 2.
 
 **Step 1.5a: Check if project branch exists**
 
@@ -482,6 +488,10 @@ PARAMETERS:
   issueId: "[ISSUE-ID]"
   body: "## Implementation Complete\n\n**PR**: [PR-URL]\n**Branch**: `[branch-name]`\n\n### Changes\n- [Summary of what was built]\n\n### Files Modified\n- `path/file1.ts` - [what changed]\n- `path/file2.ts` - [what changed]\n\n### Test Coverage\n[X]% coverage on new code\n\n### Ready for Review\nPR is ready for code review."
 ```
+
+### Step 4.4: Worktree mode – cleanup
+
+**If you are in worktree mode** (parallel runner): Do **not** delete the worktree or the branch. The runner may merge all issue branches into an integration branch (`INTEGRATION_BRANCH`) and/or run with `--cleanup` to remove worktrees after all issues complete. Leave branch and worktree for the runner to handle.
 
 ---
 

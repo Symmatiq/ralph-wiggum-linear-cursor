@@ -415,7 +415,7 @@ These issues can be worked simultaneously:
 
 ## OPERATION E: PREPARE PARALLEL WORK (LINEAR-FIRST)
 
-Use this when you want to run the **parallel runner** (one worktree per issue, cursor-agent per worktree). The runner must be installed in the consumer repo first.
+(Phase B: LOX-1138.) Use this when you want to run the **parallel runner** (one worktree per issue, cursor-agent per worktree). The runner must be installed in the consumer repo first.
 
 **Input**: Project name, project branch, optional issue IDs (or "next N ready").
 
