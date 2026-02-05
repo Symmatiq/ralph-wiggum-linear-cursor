@@ -1,4 +1,4 @@
-You are executing a single Linear issue in **worktree mode**. The branch and worktree are already created; do not create them again.
+You are executing a single Linear issue in **worktree mode**. (LOX-1129) The branch and worktree are already created; do not create them again.
 
 - **Linear issue ID**: `{{ISSUE_ID}}`
 - **Project branch** (PR target): `{{PROJECT_BRANCH}}`
