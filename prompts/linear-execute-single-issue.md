@@ -7,8 +7,8 @@ You are executing a single Linear issue in **worktree mode**. (LOX-1129) The bra
 ## Instructions
 
 1. **Follow this repo's workflow**
-   - Read and follow: `.cursor/commands/execute-linear-task.md`
-   - Follow the rules in: `.cursor/rules/linear-execution-protocol.mdc` (if present)
+   - If this repo has `.cursor/skills/linear-pre-flight`, `linear-submit`, or `linear-worktree-mode`, use them for the pre-flight, worktree behavior, and submit phases.
+   - Otherwise follow `.cursor/commands/execute-linear-task.md` and `.cursor/rules/linear-execution-protocol.mdc` as usual.
 
 2. **Do not create branch or worktree**
    - Branch and worktree already exist. Work in the current directory.
