@@ -144,7 +144,7 @@ for issue_id in "${issues_array[@]}"; do
   printf "%-13s | %-23s | %-16s | %-6s | %s\n" "$issue_id" "$worktree_path" "$branch_name" "$status" "$log_file"
 done
 
-# ---- Optional: merge into integration branch ----
+# ---- Optional: merge into integration branch (LOX-1132: INTEGRATION_BRANCH + --cleanup) ----
 if [[ -n "$INTEGRATION_BRANCH" ]]; then
   echo ""
   echo "Merging issue branches into $INTEGRATION_BRANCH..."
