@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Linear-first parallel runner: one worktree per issue, cursor-agent per worktree.
+# Linear-first parallel runner: one worktree per issue, cursor-agent per worktree. (LOX-1130, LOX-1131, LOX-1132)
 # Run from repo root. Requires: PROJECT_BRANCH, ISSUE_IDS (env or args).
 # Optional: MAX_PARALLEL (default 3), INTEGRATION_BRANCH, --cleanup.
 
