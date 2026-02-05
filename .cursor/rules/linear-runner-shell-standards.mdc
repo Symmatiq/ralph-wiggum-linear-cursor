@@ -1,0 +1,23 @@
+---
+description: Shell script standards for the Linear parallel runner (portable bash, paths, errors)
+globs: "**/*.sh"
+alwaysApply: false
+---
+
+# Shell Script Standards
+
+- Use **portable bash**: shebang `#!/usr/bin/env bash`, avoid bash-only syntax unless necessary; use `[[ ]]` and arrays for the main runner.
+- **Fail fast**: `set -e` at the top; exit with clear messages for missing deps (e.g. `cursor-agent`, `git`, `curl`/`wget`).
+- **Errors to stderr**: `echo "Error: ..." >&2` then `exit 1`; usage and examples to stderr for usage failures.
+- **Paths**: Resolve from script location, not `$PWD`. Install script: use `git rev-parse --show-toplevel` for consumer repo root. Runner: `SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"`, then `REPO_ROOT` relative to script (e.g. `SCRIPT_DIR/../..` for script in `.cursor/linear-ralph-scripts/`).
+- **Overrides via env**: Document and use env vars for overrides (e.g. `LINEAR_RALPH_WORKTREE_BASE`, `RALPH_LINEAR_INSTALL_BASE`, `MAX_PARALLEL`). No hardcoded consumer repo names or absolute paths.
+- **Idempotency**: Install script must be safe to run multiple times (create dirs, overwrite scripts).
+
+```bash
+# Good: path from script, env override, error to stderr
+WORKTREE_BASE="${LINEAR_RALPH_WORKTREE_BASE:-$REPO_ROOT/../.worktrees}"
+if ! command -v cursor-agent &>/dev/null; then
+  echo "Error: cursor-agent not found on PATH. Install with: ..." >&2
+  exit 1
+fi
+```

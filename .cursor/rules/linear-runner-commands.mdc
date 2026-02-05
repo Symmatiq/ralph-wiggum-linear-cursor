@@ -1,0 +1,16 @@
+---
+description: .cursor/commands are Cursor command definitions; keep them as reusable templates
+globs: ".cursor/commands/**/*.md"
+alwaysApply: false
+---
+
+# Command Definitions
+
+Files in `.cursor/commands/` are **Cursor command** definitions (invoked via `@.cursor/commands/<name>.md`).
+
+- **Cross-references**: Reference other commands by path: `@.cursor/commands/execute-linear-task.md`, `@.cursor/commands/orchestrate-linear-work.md`, etc. Use the same paths so links resolve in any repo that has these files.
+- **Template nature**: These commands describe workflows (create Linear project, execute issue, orchestrate work, review PR). They reference **rules** (e.g. `.cursor/rules/linear-execution-protocol.mdc`, `microservices-organization.mdc`) that may exist only in the **consumer** repo. That is intentional: this repo ships the command text; the consumer supplies rules and MCP (Linear).
+- **Tool names**: Use the tool names the agent will see (e.g. `user-linear-get_issue`, `user-linear-update_issue`, `mcp_linear_create_issue`). Do not rename tools in the command text without checking Linear MCP naming.
+- **Edits**: When editing a command, preserve the step structure and checklists; update examples and references so they stay consistent with the runner (e.g. project branch, worktree layout, install path `.cursor/linear-ralph-scripts/`).
+
+Do not add consumer-only steps (e.g. Loxtep-specific API templates) into the core command flow; keep them as optional or documented "if your repo has X, do Y."

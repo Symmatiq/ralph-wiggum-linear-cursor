@@ -1,0 +1,7 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs (runner writes here when installed in consumer)
+.cursor/linear-ralph-scripts/.logs/
+*.log

@@ -1,0 +1,11 @@
+---
+description: README and docs must stay in sync with script behavior and plan
+globs: "README.md,.cursor/docs/**/*.md"
+alwaysApply: false
+---
+
+# Documentation
+
+- **README.md**: Must document (per plan): **Prerequisites** (cursor-agent, Linear MCP, worktree-mode in consumer); **Install** one-liner and install target (`.cursor/linear-ralph-scripts/`); **Usage** with required env vars (`PROJECT_BRANCH`, `ISSUE_IDS`) and optional (`MAX_PARALLEL`, `INTEGRATION_BRANCH`, `--cleanup`, `LINEAR_RALPH_WORKTREE_BASE`); **Waves** (picking ready issues); **Troubleshooting** (cursor-agent not found, worktree exists, integration merge conflicts); **License** (e.g. MIT).
+- **Examples**: Include at least one full example (env + positional) and one with integration branch and cleanup. Log location: `.cursor/linear-ralph-scripts/.logs/<ISSUE_ID>.log`.
+- **No drift**: When adding or changing script options or env vars, update README in the same change. Install script prints usage after install; keep that line consistent with README.

@@ -1,0 +1,15 @@
+---
+description: This repo stays generic; no consumer-specific names or paths in scripts or prompts
+alwaysApply: true
+---
+
+# Generic Repo Rule
+
+This repository is **ralph-wiggum-linear-cursor**: a generic Linear-first parallel runner. Any consumer (Loxtep or others) installs it via the install script.
+
+- **No consumer names in code**: Do not hardcode "Loxtep", org names, or consumer repo paths in `install.sh`, `linear-parallel-run.sh`, or prompt templates. Commands in `.cursor/commands/` may mention a default team (e.g. Loxtep) as an example; that is documentation for a consumer who customizes.
+- **Install target**: Scripts install into the consumer's repo at `.cursor/linear-ralph-scripts/` (and `prompts/`, `.logs/`). Do not change this path without updating the plan and README.
+- **Config via env**: Overridable behavior uses environment variables (e.g. `RALPH_LINEAR_INSTALL_BASE`, `LINEAR_RALPH_WORKTREE_BASE`, `MAX_PARALLEL`, `PROJECT_BRANCH`, `ISSUE_IDS`). Base URL for install defaults to this repo's main branch; consumers can point to a fork.
+- **Worktree layout**: One worktree per issue at `../.worktrees/<ISSUE_ID>` relative to consumer repo root (or `LINEAR_RALPH_WORKTREE_BASE`). Branch name pattern: `<ISSUE_ID>-linear` (or slug if we add that later). Do not encode consumer-specific branch naming in the runner.
+
+When adding features, ask: "Would this break or assume something about a specific consumer?" If yes, make it configurable or document it as consumer responsibility.

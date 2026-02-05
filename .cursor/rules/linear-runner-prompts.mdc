@@ -1,0 +1,20 @@
+---
+description: Prompt template conventions for cursor-agent (placeholders, consumer references)
+globs: "prompts/**/*.md"
+alwaysApply: false
+---
+
+# Prompt Template Conventions
+
+Prompt files under `prompts/` are used by `linear-parallel-run.sh` when invoking **cursor-agent** per issue.
+
+- **Placeholders**: Use double-curly-brace placeholders that the script substitutes: `{{ISSUE_ID}}`, `{{PROJECT_BRANCH}}`. The runner uses `sed` to replace these; do not add placeholders the script does not substitute.
+- **Consumer repo context**: Prompts refer to the **consumer's** workflow, not this repo. Use wording like "this repo's execute-linear-task" and "this repo's linear-execution-protocol" (paths like `.cursor/commands/execute-linear-task.md` and `.cursor/rules/linear-execution-protocol.mdc`). The consumer has those files; this repo does not implement them.
+- **Worktree mode**: State clearly that branch and worktree already exist; the agent must not create them again. CWD is the worktree root. Linear is the only state (no RALPH_TASK.md).
+- **Completion**: Instruct the agent to push, open a PR against the project branch, and set the issue to In Review with a comment (per execute-linear-task). On blocker/ambiguity: set issue to Blocked or comment and exit non-zero.
+
+```markdown
+- **Linear issue ID**: `{{ISSUE_ID}}`
+- **Project branch** (PR target): `{{PROJECT_BRANCH}}`
+- Follow this repo's: `.cursor/commands/execute-linear-task.md` and `.cursor/rules/linear-execution-protocol.mdc`
+```
