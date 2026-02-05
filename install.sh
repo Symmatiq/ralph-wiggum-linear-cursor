@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install Linear-first parallel runner into the current repo.
+# Install Linear-first parallel runner into the current repo. (LOX-1128)
 # Usage: curl -fsSL https://raw.githubusercontent.com/symmatiq/ralph-wiggum-linear-cursor/main/install.sh | bash
 # Idempotent: safe to run multiple times.
 
