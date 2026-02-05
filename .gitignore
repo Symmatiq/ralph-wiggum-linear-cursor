@@ -2,6 +2,8 @@
 .DS_Store
 Thumbs.db
 
+# Installed runner (install script writes here; source of truth is repo root)
+.cursor/linear-ralph-scripts/
+
 # Logs (runner writes here when installed in consumer)
-.cursor/linear-ralph-scripts/.logs/
 *.log

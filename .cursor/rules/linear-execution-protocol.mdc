@@ -1,0 +1,43 @@
+---
+description: Protocol for executing a Linear issue (execute-linear-task); includes worktree mode for parallel runner.
+globs: 
+alwaysApply: false
+---
+
+# Linear execution protocol
+
+When executing a single Linear issue via `.cursor/commands/execute-linear-task.md`, follow this protocol. The same flow applies whether the agent is run **standalone** (user invokes execute-linear-task in the main repo) or in **worktree mode** (parallel runner has already created a branch and worktree for this issue).
+
+## Pre-flight (before any code)
+
+1. **Fetch issue** – Get full issue details (Linear MCP `get_issue`).
+2. **Verify blockers** – If the issue lists "Blocked By", resolve each blocker; do not start if any blocker is not Done unless user overrides.
+3. **Verify status** – If issue is Done, In Review, or Backlog (and not override), report and do not implement.
+4. **Update Linear** – Set issue to In Progress, assignee "me", add a short comment (branch name, approach).
+5. **Branch / worktree** – See below (normal vs worktree mode).
+
+Rest of protocol unchanged: implementation, testing, then Submit (commit, push, PR to project branch, update Linear to In Review + comment).
+
+## Worktree mode (runner-created branch/worktree)
+
+When the agent is run **by the parallel runner** (e.g. `linear-parallel-run.sh`), the runner has already:
+
+- Created a git worktree for this issue (e.g. `../.worktrees/<ISSUE_ID>`).
+- Created a branch (e.g. `<ISSUE_ID>-linear`) and checked it out in that worktree.
+- Set CWD to the worktree root.
+
+In that case:
+
+- **Skip** creating a project branch or feature branch; **skip** creating a worktree. The branch and worktree already exist.
+- **Do** still perform: fetch issue, verify blockers, verify status, update Linear (In Progress + comment).
+- **Do** determine the **project branch** (from issue/project) so the agent knows the PR base; you will not run `git checkout` to create a branch, but you need the base for the PR.
+- Optionally verify current branch matches the expected pattern (e.g. `$ISSUE_ID-linear` or similar) and that CWD is the worktree root.
+
+Reference: `.cursor/commands/execute-linear-task.md` (worktree-mode steps), `.cursor/docs/parallel-linear-worktrees.md` (how to run the parallel runner).
+
+## Submit (after implementation)
+
+- Commit, push, open PR against the **project branch** (never `main` or `development` directly).
+- Update Linear: state In Review, comment with PR link and summary.
+
+In **worktree mode**, do not delete the worktree or branch. The parallel runner may merge issue branches into an integration branch and/or run `--cleanup` (remove worktrees) after all runs complete. Leave the branch and worktree for the runner to handle.
