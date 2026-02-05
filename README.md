@@ -1,6 +1,6 @@
 # ralph-wiggum-linear-cursor
 
-Linear-first parallel runner for Cursor: one git worktree per Linear issue, run **cursor-agent** in each worktree in parallel. Linear is the only source of state (no RALPH_TASK.md). Install into any repo via a one-liner; run from repo root with a project branch and a list of issue IDs.
+Linear-first parallel runner for Cursor (Phase A doc: LOX-1133): one git worktree per Linear issue, run **cursor-agent** in each worktree in parallel. Linear is the only source of state (no RALPH_TASK.md). Install into any repo via a one-liner; run from repo root with a project branch and a list of issue IDs.
 
 ## Prerequisites
 
