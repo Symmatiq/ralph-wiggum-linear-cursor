@@ -67,7 +67,7 @@ fi
 
 mkdir -p "$WORKTREE_BASE" "$LOG_DIR"
 
-# ---- Helpers ----
+# ---- Helpers (LOX-1131: cursor-agent invocation, prompt substitution, MAX_PARALLEL) ----
 run_agent() {
   local issue_id="$1"
   local branch_name="${issue_id}-linear"
