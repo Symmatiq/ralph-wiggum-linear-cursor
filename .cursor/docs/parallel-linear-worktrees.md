@@ -15,7 +15,9 @@ This creates **`.cursor/linear-ralph-scripts/`** with:
 - `linear-parallel-run.sh` — main runner
 - `prompts/linear-execute-single-issue.md` — prompt template for cursor-agent
 
-Idempotent: safe to run again to update scripts.
+**Optional:** Set `INSTALL_SKILLS=1` to also install Linear execution skills into `.cursor/skills/` (linear-pre-flight, linear-submit, linear-worktree-mode, execute-linear-task). Installing these skills improves consistency of agent behavior when running in worktrees; the prompt template directs the agent to use them when present.
+
+Idempotent: safe to run again to update scripts (and skills if `INSTALL_SKILLS=1`).
 
 ## Usage
 
@@ -51,6 +53,13 @@ Run in batches: pick a first wave of ready issues (e.g. from Linear: Todo, no bl
 
 - **Worktree mode**: When the agent runs inside a worktree created by the runner, it must **not** create another branch or worktree. See `.cursor/rules/linear-execution-protocol.mdc` and `.cursor/commands/execute-linear-task.md` (worktree mode).
 - **Orchestrate**: Use `.cursor/commands/orchestrate-linear-work.md` → Operation E to prepare parallel work (project name, project branch, issue IDs or "next N ready") and get the run command.
+
+## Review after run
+
+After the parallel runner finishes, you can review each opened PR before merging. From the repo root (or in Cursor), for each PR opened by the run:
+
+- Use the **review-linear-pr** skill (or run `.cursor/commands/review-pull-request.md`) with the PR number or branch. Example: "Review PR #12" or "Review the PR for LOX-123 using the review-linear-pr skill."
+- The review agent will validate requirements against the Linear issue, check code quality, and run build/tests. Optionally post the review summary as a comment on the Linear issue.
 
 ## Troubleshooting
 

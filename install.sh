@@ -37,7 +37,21 @@ fetch "linear-parallel-run.sh" "${INSTALL_DIR}/linear-parallel-run.sh"
 fetch "prompts/linear-execute-single-issue.md" "${PROMPTS_DIR}/linear-execute-single-issue.md"
 chmod +x "${INSTALL_DIR}/linear-parallel-run.sh"
 
+# Optional: install Cursor Agent Skills for consistent pre-flight, submit, and worktree behavior
+if [[ -n "${INSTALL_SKILLS:-}" ]]; then
+  SKILLS_DIR="${ROOT}/.cursor/skills"
+  mkdir -p "${SKILLS_DIR}/linear-pre-flight" "${SKILLS_DIR}/linear-submit" "${SKILLS_DIR}/linear-worktree-mode" "${SKILLS_DIR}/execute-linear-task"
+  fetch ".cursor/skills/linear-pre-flight/SKILL.md" "${SKILLS_DIR}/linear-pre-flight/SKILL.md"
+  fetch ".cursor/skills/linear-submit/SKILL.md" "${SKILLS_DIR}/linear-submit/SKILL.md"
+  fetch ".cursor/skills/linear-worktree-mode/SKILL.md" "${SKILLS_DIR}/linear-worktree-mode/SKILL.md"
+  fetch ".cursor/skills/execute-linear-task/SKILL.md" "${SKILLS_DIR}/execute-linear-task/SKILL.md"
+  echo "Installed Linear execution skills into ${SKILLS_DIR}."
+fi
+
 echo "Done. Run from repo root:"
 echo "  ./${INSTALL_DIR}/linear-parallel-run.sh PROJECT_BRANCH=<branch> ISSUE_IDS=\"<id1> <id2> ...\""
 echo "Example:"
 echo "  ./${INSTALL_DIR}/linear-parallel-run.sh project/studio-ide \"LOX-123 LOX-124\""
+if [[ -z "${INSTALL_SKILLS:-}" ]]; then
+  echo "Optional: INSTALL_SKILLS=1 to install Linear execution skills into .cursor/skills/ for more consistent agent behavior."
+fi

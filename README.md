@@ -27,7 +27,15 @@ This creates `.cursor/linear-ralph-scripts/` and drops in:
 - `linear-parallel-run.sh` — main runner
 - `prompts/linear-execute-single-issue.md` — prompt template for cursor-agent
 
-Idempotent: safe to run again to update scripts.
+**Optional (recommended):** Install Cursor Agent Skills for more consistent pre-flight, worktree, and submit behavior when the agent runs in worktrees:
+
+```bash
+INSTALL_SKILLS=1 curl -fsSL https://raw.githubusercontent.com/symmatiq/ralph-wiggum-linear-cursor/main/install.sh | bash
+```
+
+This adds `.cursor/skills/` with `linear-pre-flight`, `linear-submit`, `linear-worktree-mode`, and `execute-linear-task`. The prompt template tells the agent to use these skills when present.
+
+Idempotent: safe to run again to update scripts (and skills if `INSTALL_SKILLS=1`).
 
 ## Usage
 
@@ -64,6 +72,8 @@ PROJECT_BRANCH=project/studio-ide ISSUE_IDS="LOX-123 LOX-124" INTEGRATION_BRANCH
 ```
 
 **Output:** A table of issue ID, worktree path, branch, status (ok/fail), and log path. Logs live under `.cursor/linear-ralph-scripts/.logs/<ISSUE_ID>.log`.
+
+**Review after run:** After the run, review each opened PR before merging. Use the review-linear-pr skill (or `.cursor/commands/review-pull-request.md`) with the PR number or branch; the agent validates requirements against the Linear issue and runs build/tests. See `.cursor/docs/parallel-linear-worktrees.md` for the full workflow.
 
 ## Waves (picking issues)
 
