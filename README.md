@@ -12,7 +12,7 @@ Linear-first parallel runner for Cursor (Phase A doc: LOX-1133): one git worktre
 
 - **Linear MCP** configured in the consumer repo so that cursor-agent can call `get_issue`, `update_issue`, `create_comment` when executing each issue.
 
-- **Worktree-mode protocol** in the consumer repo: `.cursor/commands/execute-linear-task.md` and (optionally) `.cursor/rules/linear-execution-protocol.mdc`, so the agent knows not to create branches/worktrees again and how to submit (push, PR, update Linear).
+- **Commands and protocol** are installed by the script into `.cursor/commands/` and `.cursor/rules/` so the agent knows the workflow (execute-linear-task, protocol, orchestrate, review).
 
 ## Install (Option A: install script)
 
@@ -22,10 +22,15 @@ From your **project repo root** (the repo that has your code and Linear-backed w
 curl -fsSL https://raw.githubusercontent.com/symmatiq/ralph-wiggum-linear-cursor/main/install.sh | bash
 ```
 
-This creates `.cursor/linear-ralph-scripts/` and drops in:
+This creates `.cursor/linear-ralph-scripts/`, `.cursor/rules/`, and `.cursor/commands/` with:
 
 - `linear-parallel-run.sh` — main runner
 - `prompts/linear-execute-single-issue.md` — prompt template for cursor-agent
+- `.cursor/rules/linear-execution-protocol.mdc` — protocol (pre-flight, worktree mode, submit)
+- `.cursor/commands/execute-linear-task.md` — run a single Linear issue (used by the agent in each worktree)
+- `.cursor/commands/orchestrate-linear-work.md` — status, assign, Operation E (prepare parallel run)
+- `.cursor/commands/review-pull-request.md` — review PRs (e.g. after a parallel run)
+- `.cursor/commands/create-linear-project.md` — create Linear project and first issues
 
 **Optional (recommended):** Install Cursor Agent Skills for more consistent pre-flight, worktree, and submit behavior when the agent runs in worktrees:
 

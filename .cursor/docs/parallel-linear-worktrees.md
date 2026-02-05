@@ -10,10 +10,12 @@ From this repo's root (the repo that has your code and Linear-backed work):
 curl -fsSL https://raw.githubusercontent.com/Symmatiq/ralph-wiggum-linear-cursor/main/install.sh | bash
 ```
 
-This creates **`.cursor/linear-ralph-scripts/`** with:
+This creates **`.cursor/linear-ralph-scripts/`**, **`.cursor/rules/`**, and **`.cursor/commands/`** with:
 
 - `linear-parallel-run.sh` — main runner
 - `prompts/linear-execute-single-issue.md` — prompt template for cursor-agent
+- `.cursor/rules/linear-execution-protocol.mdc` — protocol (pre-flight, worktree mode, submit)
+- `.cursor/commands/execute-linear-task.md`, `orchestrate-linear-work.md`, `review-pull-request.md`, `create-linear-project.md` — Cursor commands for the workflow
 
 **Optional:** Set `INSTALL_SKILLS=1` to also install Linear execution skills into `.cursor/skills/` (linear-pre-flight, linear-submit, linear-worktree-mode, execute-linear-task). Installing these skills improves consistency of agent behavior when running in worktrees; the prompt template directs the agent to use them when present.
 

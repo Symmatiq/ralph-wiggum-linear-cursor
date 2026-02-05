@@ -17,7 +17,7 @@ fi
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
-mkdir -p "$PROMPTS_DIR" "$LOGS_DIR"
+mkdir -p "$PROMPTS_DIR" "$LOGS_DIR" "${ROOT}/.cursor/rules" "${ROOT}/.cursor/commands" "${ROOT}/.cursor/docs"
 
 fetch() {
   local path="$1"
@@ -36,6 +36,18 @@ echo "Installing ralph-wiggum-linear-cursor into ${ROOT}/${INSTALL_DIR}..."
 fetch "linear-parallel-run.sh" "${INSTALL_DIR}/linear-parallel-run.sh"
 fetch "prompts/linear-execute-single-issue.md" "${PROMPTS_DIR}/linear-execute-single-issue.md"
 chmod +x "${INSTALL_DIR}/linear-parallel-run.sh"
+
+echo "Installing protocol and rules into ${ROOT}/.cursor/rules..."
+fetch ".cursor/rules/linear-execution-protocol.mdc" "${ROOT}/.cursor/rules/linear-execution-protocol.mdc"
+
+echo "Installing commands into ${ROOT}/.cursor/commands..."
+fetch ".cursor/commands/execute-linear-task.md" "${ROOT}/.cursor/commands/execute-linear-task.md"
+fetch ".cursor/commands/orchestrate-linear-work.md" "${ROOT}/.cursor/commands/orchestrate-linear-work.md"
+fetch ".cursor/commands/review-pull-request.md" "${ROOT}/.cursor/commands/review-pull-request.md"
+fetch ".cursor/commands/create-linear-project.md" "${ROOT}/.cursor/commands/create-linear-project.md"
+
+echo "Installing docs into ${ROOT}/.cursor/docs..."
+fetch ".cursor/docs/parallel-linear-worktrees.md" "${ROOT}/.cursor/docs/parallel-linear-worktrees.md"
 
 # Optional: install Cursor Agent Skills for consistent pre-flight, submit, and worktree behavior
 if [[ -n "${INSTALL_SKILLS:-}" ]]; then
